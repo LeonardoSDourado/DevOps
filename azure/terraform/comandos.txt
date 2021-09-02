@@ -1,0 +1,25 @@
+terraform init
+terraform plan
+terraform apply
+terraform show
+terraform refresh
+terraform destroy --target aws_instance.dev4
+
+Para utilizar terraform na nuvem é necessário:
+* gerar a key na nuvem;
+* criar arquivo ~/.terraformrc:
+credentials "app.terraform.io" {
+  token = "XXX"
+}
+* criar arquivo na estrutura do terraform remote-state.tf:
+terraform {
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "alura"
+
+    workspaces {
+      name = "alura-curso-terraform"
+    }
+  }
+}
+* terraform init # Envia o que está no repositório local para a nuvem
